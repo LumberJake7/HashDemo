@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block content %}
+<h1>All Feedback</h1>
+
+{% if feedback %}
+<ul>
+  {% for feedback in feedback %}
+  <li>
+    <h3>{{ feedback.title }}</h3>
+    <p>{{ feedback.content }}</p>
+    <p>Username: {{ feedback.username }}</p>
+    {% if feedback.username == user.username %}
+    <a
+      href="{{ url_for('feedback_update', feedback_id=feedback.id) }}"
+      class="btn btn-primary"
+      >Edit</a
+    >
+    <a
+    href="{{ url_for('feedback_delete', feedback_id=feedback.id) }}"
+    class="btn btn-danger"
+    onclick="event.preventDefault(); document.getElementById('delete-form-{{ feedback.id }}').submit();"
+    >Delete</a
+ >
+ <form id="delete-form-{{ feedback.id }}" action="{{ url_for('feedback_delete', feedback_id=feedback.id) }}" method="post" style="display: none;">
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No feedback available.</p>
+{% endif %} {% endblock %}

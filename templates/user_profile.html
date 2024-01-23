@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block content %}
+<h1>User Profile</h1>
+
+<h2>UserName: {{ profile_user.username }}</h2>
+<dl>
+  {% for field, value in profile_user.__dict__.items() if not
+  field.startswith('_') and field != 'password' %}
+  <dt>{{ field|capitalize }}</dt>
+  <dd>{{ value }}</dd>
+  {% endfor %}
+</dl>
+<form
+  method="POST"
+  action="{{ url_for('delete_user', username=user.username) }}"
+  onsubmit="return confirm('Are you sure you want to delete your account?');"
+>
+  <button type="submit" class="btn btn-danger">Delete Account</button>
+</form>
+<a
+  href="{{ url_for('add_feedback', username=user.username) }}"
+  class="btn btn-primary"
+  >Add Feedback</a
+>
+
+{% endblock %}

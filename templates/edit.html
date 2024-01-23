@@ -1,0 +1,34 @@
+{% extends 'base.html' %} {% block content %}
+<h2>Edit Feedback</h2>
+
+{% for error in form.errors %}
+<div class="alert alert-danger" role="alert">{{ error }}</div>
+{% endfor %}
+
+<form
+  method="POST"
+  action="{{ url_for('feedback_update', feedback_id=feedback.id) }}"
+>
+  {{ form.hidden_tag() }}
+
+  <div class="form-group">
+    {{ form.title.label }} {{ form.title(class_="form-control",
+    value=feedback.title) }} {% for error in form.title.errors %}
+    <span class="form-text text-danger">{{ error }}</span>
+    {% endfor %}
+  </div>
+
+  <div class="form-group">
+    {{ form.content.label }} {{ form.content(class_="form-control",
+    value=feedback.content) }} {% for error in form.content.errors %}
+    <span class="form-text text-danger">{{ error }}</span>
+    {% endfor %}
+  </div>
+  <div>
+    <strong>Debug:</strong>
+    {{ feedback.content }}
+  </div>
+  <button class="btn btn-success" type="submit">Update Feedback</button>
+</form>
+
+{% endblock %}

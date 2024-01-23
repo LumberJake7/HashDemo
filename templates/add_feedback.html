@@ -1,0 +1,31 @@
+{% extends 'base.html' %} {% block content %}
+<h2>Add Feedback</h2>
+
+{% for error in form.errors %}
+<div class="alert alert-danger" role="alert">{{ error }}</div>
+{% endfor %}
+
+<form
+  method="POST"
+  action="{{ url_for('add_feedback', username=user.username) }}"
+>
+  {{ form.hidden_tag() }}
+
+  <div class="form-group">
+    {{ form.title.label }} {{ form.title(class_="form-control") }} {% for error
+    in form.title.errors %}
+    <span class="form-text text-danger">{{ error }}</span>
+    {% endfor %}
+  </div>
+
+  <div class="form-group">
+    {{ form.content.label }} {{ form.content(class_="form-control") }} {% for
+    error in form.content.errors %}
+    <span class="form-text text-danger">{{ error }}</span>
+    {% endfor %}
+  </div>
+
+  <button class="btn btn-success" type="submit">Submit Feedback</button>
+</form>
+
+{% endblock %}
